@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+from datetime import date
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path="./.env")
@@ -120,11 +121,22 @@ def extract_video_data(video_ids):
         raise e
 
 
+
+
+#we are saving the extracted data from API's in a json file in our local rather then S3 bucket or any other bulk cloud storage
+def save_to_json(extracted_data):
+    file_path = f"./data/video_data_{date.today()}.json"
+
+    with open(file_path, "w", encoding="utf-8") as json_outfile:
+        json.dump(extracted_data, json_outfile, indent=4, ensure_ascii=False)
+
 if __name__ == "__main__":
     playlistId = get_playlist_id()
     video_ids = get_video_ids(playlistId)
     #print(extract_video_data(video_ids))
-    extract_video_data(video_ids)
+    video_data = extract_video_data(video_ids)
+    save_to_json(video_data)
+
 
 
 
