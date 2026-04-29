@@ -75,3 +75,25 @@ def get_video_ids(cur, schema):
     video_ids = [row["Video_ID"] for row in ids]
     #example how video_ids look like ['abc123', 'def456']
     return video_ids
+
+
+
+def delete_rows(cur, conn, schema, ids_to_delete):
+
+    try:
+
+        ids_to_delete = f"""({', '.join(f"'{id}'" for id in ids_to_delete)})"""
+
+        cur.execute(
+            f"""
+            DELETE FROM {schema}.{table}
+            WHERE "Video_ID" IN {ids_to_delete};
+            """
+        )
+
+        conn.commit()
+        logger.info(f"Deleted rows with Video_IDs: {ids_to_delete}")
+
+    except Exception as e:
+        logger.error(f"Error deleting rows with Video_IDs: {ids_to_delete} - {e}")
+        raise e
