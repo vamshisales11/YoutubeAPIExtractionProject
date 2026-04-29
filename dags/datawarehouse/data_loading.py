@@ -6,8 +6,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def load_path():
-    file_path = f"./data/YT_data_{date.today()}.json"
+def load_data():
+    # file_path = f"./data/YT_data_{date.today()}.json"
+    file_path = f"/opt/airflow/data/video_data_{date.today()}.json"
     
     try:
         logger.info(f"Processing file: YT_data_({date.today()})")

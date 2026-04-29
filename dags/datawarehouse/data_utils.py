@@ -5,10 +5,10 @@ from psycopg2.extras import RealDictCursor
 table = "yt_api"
 
 def get_conn_cursor():
-    hook = PostgresHook(postgres_conn_id='postgres_default', database='elt_db')
-
+    hook = PostgresHook(postgres_conn_id='POSTGRES_DB_YT_ELT', database='elt_db')
     conn = hook.get_conn()
     cur = conn.cursor(cursor_factory=RealDictCursor)
+    return conn, cur
 
     
 def close_conn_cursor(conn, cur):
